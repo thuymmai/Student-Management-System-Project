@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CourseRepository extends JpaRepository<Courses, Long> {
 
     // whether input is in lowercase or uppercase, it should match the alphabet
-    boolean existsByCodeIgnoreCases(String code);
+    boolean existsByCourseCodeIgnoreCase (String code);
 }

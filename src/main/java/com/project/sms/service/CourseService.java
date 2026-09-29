@@ -6,7 +6,7 @@ public interface CourseService {
 
     CourseDTO createCourse(CourseDTO courseDTO);
 
-    boolean existsByCode (String code);
+    boolean existsByCourseCode (String code);
 
 
 

@@ -53,7 +53,7 @@ public class CourseController {
 
         // check whether a code (?) already existed
         // have the boolean method in CourseService.java
-        if (courseService.existsByCode(courseDTO.getCourseCode())) {
+        if (courseService.existsByCourseCode(courseDTO.getCourseCode())) {
             bindingResult.rejectValue("courseCode", "The course code must be unique");
             return "add-course";
 
