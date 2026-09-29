@@ -5,7 +5,11 @@ import com.project.sms.model.Courses;
 import com.project.sms.repository.CourseRepository;
 import com.project.sms.service.CourseService;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
+@Transactional
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
@@ -26,5 +30,12 @@ public class CourseServiceImpl implements CourseService {
         Courses courses = mapper.map(courseDTO, Courses.class);
         courseRepository.save(courses);
         return mapper.map(courses, CourseDTO.class); // convert entity back to CourseDTO
+    }
+
+    // check for ...
+    // create a method in CourseRepository.java
+    @Override
+    public boolean existsByCode(String code) {
+        return courseRepository.existsByCodeIgnoreCases(code);
     }
 }

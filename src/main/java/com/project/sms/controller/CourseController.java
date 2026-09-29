@@ -1,6 +1,7 @@
 package com.project.sms.controller;
 
 import com.project.sms.dto.CourseDTO;
+import com.project.sms.service.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/course")
 public class CourseController {
+
+    // constructor injection
+    // then created the courseService object
+    private CourseService courseService;
+
+    CourseController(CourseService courseService) {
+        this.courseService = courseService;
+    }
+
+    /*************************************************************************/
 
     @GetMapping("/new")
     public String showCreateCourse(Model model) {
@@ -33,16 +44,24 @@ public class CourseController {
                                RedirectAttributes redirectAttributes) {
 
         // when a form is submitted, there might be errors so send it back here and display an error message
+        // if there is an error, user will be directed to Add Course page
+        // if validation fails, BindingResult will capture it
         if (bindingResult.hasErrors()) {
             return "add-course";
         }
 
-        if () {
+
+        // check whether a code (?) already existed
+        // have the boolean method in CourseService.java
+        if (courseService.existsByCode(courseDTO.getCourseCode())) {
+            bindingResult.rejectValue("courseCode", "The course code must be unique");
+            return "add-course";
 
         }
 
+        courseService.createCourse(courseDTO);
+        redirectAttributes.addAttribute("message", "Course created successfully.");
 
-
-        return ""; // decide which page the method will direct later
+        return "/course/list"; // decide which page the method will direct later
     }
 }

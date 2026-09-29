@@ -24,6 +24,12 @@
         <div class="card-body p-4 p-md-5">
             <h4 class="text-center mb-4 fw-bold text-dark">Welcome Back</h4>
 
+            <div th:if="${param.error}" class="alert alert-danger text-center" role="alert">
+                Invalid username or password. Please try again.
+            </div>
+
+            <div th:if="${message}" class="alert alert-danger text-center" role="alert" th:text="${message}"></div>
+
             <!-- Where I provide the /login path -->
             <form th:action="@{/login}" method="post">
 

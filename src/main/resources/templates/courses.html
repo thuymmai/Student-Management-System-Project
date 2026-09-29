@@ -18,6 +18,8 @@
                         Course</a>
                 </div>
 
+                <div th:if="${message}" class="alert alert-danger text-center" role="alert" th:text="${message}"></div>
+
                 <div class="card mb-4">
                     <div class="card-header bg-white">
                         <i class="bi bi-table me-1"></i> Course List
