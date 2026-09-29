@@ -1,6 +1,7 @@
 package com.project.sms.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
@@ -18,7 +19,7 @@ public class CourseDTO {
     @NotBlank(message = "Course duration is required.")
     private String duration; //i.e., classes last for 4 months
 
-    @NotBlank(message = "Course fee is required.")
+    @NotNull(message = "Course fee is required.")
     private BigDecimal fee;
 
     @Size(max = 500, message = "Max of 500 characters allowed.")

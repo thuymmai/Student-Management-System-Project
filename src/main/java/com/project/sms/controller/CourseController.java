@@ -38,7 +38,7 @@ public class CourseController {
     }
 
     @PostMapping
-    public String createCourse(@Valid @ModelAttribute("courseDTO") CourseDTO courseDTO,
+    public String createCourse(@Valid @ModelAttribute("courseDto") CourseDTO courseDTO,
                                BindingResult bindingResult,
                                Model model,
                                RedirectAttributes redirectAttributes) {
@@ -54,7 +54,7 @@ public class CourseController {
         // check whether a code (?) already existed
         // have the boolean method in CourseService.java
         if (courseService.existsByCourseCode(courseDTO.getCourseCode())) {
-            bindingResult.rejectValue("courseCode", "The course code must be unique");
+            bindingResult.rejectValue("courseCode", null, "The course code must be unique");
             return "add-course";
 
         }
