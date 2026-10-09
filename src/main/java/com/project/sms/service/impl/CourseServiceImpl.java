@@ -8,6 +8,9 @@ import com.project.sms.service.CourseService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,5 +50,15 @@ public class CourseServiceImpl implements CourseService {
         log.info("checking if the course code exists: {}", code);
 
         return courseRepository.existsByCourseCodeIgnoreCase(code);
+    }
+
+    @Override
+    public Page<CourseDTO> getCourses(int page, int size) {
+        log.info("list of course from: {}", page);
+
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+
+        return courseRepository.findByActiveTrue(pageRequest)
+                .map(course -> mapper.map(course, CourseDTO.class));
     }
 }

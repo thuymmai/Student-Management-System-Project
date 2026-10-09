@@ -12,6 +12,6 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
 
     // method that only displays active courses
     // in MySQL, it will look like this: SELECT * FROM ___
-    // F2 = true?? What is F2?
+    // F2 = true?? What is F2? F2 is a name of column that Hibernate makes up
     Page<Courses> findByActiveTrue(Pageable pageable);
 }
