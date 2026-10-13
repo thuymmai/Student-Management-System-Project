@@ -6,13 +6,11 @@ import com.project.sms.service.CourseService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -43,7 +41,19 @@ public class CourseController {
     }
 
     @GetMapping("/list")
-    public String listCourses(Model model) {
+    // defaultValue = 0 because page number in the pagination starts at 0
+    public String listCourses(@RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "5") int size,
+                              Model model) {
+
+        log.info("Get /course/list - showing list of course page.");
+
+        // 2) call method ___ from CourseServiceImpl.java
+
+        // 1) before pagination, check if the list is coming/existing; if list exists, I will program for the pagination part.
+        // first check if the list is getting displayed, so call courseService
+        Page<CourseDTO> courses = courseService.getCourses(page, size);
+        model.addAttribute("courses", courses);
 
         return "courses";
     }
