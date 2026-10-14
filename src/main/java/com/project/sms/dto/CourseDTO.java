@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 
 public class CourseDTO {
 
+    private Long id;
+
     @NotBlank(message = "Course name is required.")
     @Size(max = 150, message = "Max of 150 characters allowed.")
     private String courseName;
@@ -24,6 +26,14 @@ public class CourseDTO {
 
     @Size(max = 500, message = "Max of 500 characters allowed.")
     private String description;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCourseName() {
         return courseName;

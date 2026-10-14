@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.security.authorization.RequiredAuthoritiesAuthorizationManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,8 +44,9 @@ public class CourseController {
     @GetMapping("/list")
     // defaultValue = 0 because page number in the pagination starts at 0
     public String listCourses(@RequestParam(defaultValue = "0") int page,
-                              @RequestParam(defaultValue = "5") int size,
-                              Model model) {
+                              @RequestParam(defaultValue = "3") int size,
+                              Model model,
+                              @RequestParam(value = "message", required = false) String message) {
 
         log.info("Get /course/list - showing list of course page.");
 
@@ -54,6 +56,7 @@ public class CourseController {
         // first check if the list is getting displayed, so call courseService
         Page<CourseDTO> courses = courseService.getCourses(page, size);
         model.addAttribute("courses", courses);
+        model.addAttribute("message", message);
 
         return "courses";
     }
