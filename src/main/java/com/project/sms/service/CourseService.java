@@ -15,6 +15,12 @@ public interface CourseService {
     // method returns Page and accesses CourseDTO, not Course entity
     Page<CourseDTO> getCourses(int page, int size);
 
+    CourseDTO getCourseById(Long id);
+
+    // after updating a course, the new info is saved and stored in database
+    // make sure the class with the existing ID is updated
+    CourseDTO updateCourse(Long id, CourseDTO courseDTO);
+
 
 
 

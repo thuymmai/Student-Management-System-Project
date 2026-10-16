@@ -27,6 +27,8 @@ public class CourseDTO {
     @Size(max = 500, message = "Max of 500 characters allowed.")
     private String description;
 
+    private boolean active;
+
     public Long getId() {
         return id;
     }
@@ -73,5 +75,13 @@ public class CourseDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

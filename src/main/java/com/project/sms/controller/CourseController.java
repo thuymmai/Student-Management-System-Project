@@ -94,4 +94,21 @@ public class CourseController {
 
         return "redirect:/course/list"; // decide which page the method will direct later
     }
+
+    @GetMapping("/{id}")
+    public String getCourseById(@PathVariable Long id, Model model) {
+        CourseDTO course = courseService.getCourseById(id);
+        model.addAttribute("course", course);
+
+        return "view-course";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editCourse(@PathVariable Long id, Model model) {
+        CourseDTO course = courseService.getCourseById(id);
+        model.addAttribute("courseDto", course);
+
+        return "edit-course";
+
+    }
 }

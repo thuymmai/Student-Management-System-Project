@@ -53,6 +53,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<CourseDTO> getCourses(int page, int size) {
         log.info("list of course from: {}", page);
 
@@ -61,4 +62,35 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.findByActiveTrue(pageRequest)
                 .map(course -> mapper.map(course, CourseDTO.class));
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CourseDTO getCourseById(Long id) {
+        Courses course = courseRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("No course found"));
+
+        return mapper.map(course, CourseDTO.class);
+    }
+
+    @Override
+    public CourseDTO updateCourse(Long id, CourseDTO courseDTO) {
+
+        // when user is updating a course, check if their input is valid
+        Courses course = courseRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("No course found"));
+
+        // comment...
+        // course.setCourseCode(courseDTO.getCourseCode());
+
+        // is user enters a valid course ID, that updated info is saved in courseDTO
+        mapper.map(courseDTO, course);
+
+        // save updated info to repository
+        Courses updated = courseRepository.save(course);
+
+        // return the new/updated value that was saved
+        return mapper.map(updated, CourseDTO.class);
+    }
+
+
 }
