@@ -111,4 +111,42 @@ public class CourseController {
         return "edit-course";
 
     }
+
+    @PostMapping("/{id}/update")
+    public String updateCourse(@PathVariable Long id, @Valid @ModelAttribute("courseDto") CourseDTO courseDTO,
+                               BindingResult bindingResult,
+                               Model model,
+                               RedirectAttributes redirectAttributes) {
+
+        log.info("Post /{id}/update - update course request received.", id);
+
+        // when a form is submitted, there might be errors so send it back here and display an error message
+        // if there is an error, user will be directed to Add Course page
+        // if validation fails, BindingResult will capture it
+        if (bindingResult.hasErrors()) {
+            log.error("Post /{id}/update - page return due to validation error.");
+            return "edit-course";
+        }
+
+
+        // check whether a code (?) already existed
+        // have the boolean method in CourseService.java
+        // change existsByCourseCode to existsByCourseCodeAndIdNot
+        // also, provide id from updateCourse method above
+        if (courseService.existsByCourseCodeAndIdNot(courseDTO.getCourseCode(), id)) {
+            log.error("Post /{id}/update - The course code must be unique.");
+
+            bindingResult.rejectValue("courseCode", null, "The course code must be unique");
+            return "edit-course";
+
+        }
+
+        courseService.updateCourse(id, courseDTO);
+        redirectAttributes.addAttribute("message", "Course is updated successfully.");
+
+        log.info("Post /{id}/update - update course successfully.");
+
+        return "redirect:/course/list";
+
+    }
 }

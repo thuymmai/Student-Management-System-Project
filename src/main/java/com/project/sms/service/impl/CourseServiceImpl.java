@@ -52,6 +52,15 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.existsByCourseCodeIgnoreCase(code);
     }
 
+    // method checking if existing ID matches its record
+    @Override
+    public boolean existsByCourseCodeAndIdNot(String code, Long id) {
+
+        log.info("course code from update page: {}, id: {}", code, id);
+
+        return courseRepository.existsByCourseCodeIgnoreCaseAndIdNot(code, id);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Page<CourseDTO> getCourses(int page, int size) {
@@ -91,6 +100,9 @@ public class CourseServiceImpl implements CourseService {
         // return the new/updated value that was saved
         return mapper.map(updated, CourseDTO.class);
     }
+
+
+
 
 
 }

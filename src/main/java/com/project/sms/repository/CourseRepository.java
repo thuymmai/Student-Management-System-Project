@@ -10,6 +10,9 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
     // whether input is in lowercase or uppercase, it should match the alphabet
     boolean existsByCourseCodeIgnoreCase (String code);
 
+    // method checks if the same ID belongs to its corresponding entity/record
+    boolean existsByCourseCodeIgnoreCaseAndIdNot (String code, Long id);
+
     // method that only displays active courses
     // in MySQL, it will look like this: SELECT * FROM ___
     // F2 = true?? What is F2? F2 is a name of column that Hibernate makes up

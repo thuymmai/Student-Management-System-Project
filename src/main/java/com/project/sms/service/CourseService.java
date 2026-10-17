@@ -9,6 +9,9 @@ public interface CourseService {
 
     boolean existsByCourseCode (String code);
 
+    // method checking if existing ID matches its record
+    boolean existsByCourseCodeAndIdNot (String code, Long id);
+
     // the page will tell which page to start from
     // the size will tell me how much data of class to fetch -> fetching 10-15 classes at a time
     // create getCourses() method
@@ -20,6 +23,8 @@ public interface CourseService {
     // after updating a course, the new info is saved and stored in database
     // make sure the class with the existing ID is updated
     CourseDTO updateCourse(Long id, CourseDTO courseDTO);
+
+
 
 
 
