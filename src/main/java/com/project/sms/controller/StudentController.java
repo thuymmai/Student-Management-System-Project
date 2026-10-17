@@ -25,7 +25,7 @@ public class StudentController {
     public String showCreateStudent(Model model) {
 
         model.addAttribute("studentDto", new StudentDTO());
-        
+
         return "add-student";
     }
 }
