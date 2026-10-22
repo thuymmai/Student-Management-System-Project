@@ -24,8 +24,18 @@ public class StudentController {
     @GetMapping("/new") // retrieve read-only data, such as the add-student page so the user can add new students
     public String showCreateStudent(Model model) {
 
+        log.info("Get /new - showing Create Student page");
+
         model.addAttribute("studentDto", new StudentDTO());
 
         return "add-student";
+    }
+
+    @GetMapping("/list")
+    public String listStudent() {
+
+        log.info("Get /list - showing List Student page");
+
+        return "students"; // students.html
     }
 }
