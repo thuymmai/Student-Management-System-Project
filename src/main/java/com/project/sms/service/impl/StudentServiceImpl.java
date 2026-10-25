@@ -1,5 +1,7 @@
 package com.project.sms.service.impl;
 
+import com.project.sms.dto.StudentDTO;
+import com.project.sms.model.Students;
 import com.project.sms.repository.StudentRepository;
 import com.project.sms.service.StudentService;
 import org.modelmapper.ModelMapper;
@@ -21,6 +23,7 @@ public class StudentServiceImpl implements StudentService {
     private final ModelMapper mapper;
 
     // constructor injection
+    // below is the class constructor for the StudentServiceImpl class
     public StudentServiceImpl (StudentRepository studentRepository, ModelMapper mapper) {
         this.studentRepository = studentRepository;
         this.mapper = mapper;
@@ -30,5 +33,15 @@ public class StudentServiceImpl implements StudentService {
     public boolean existsByEmailIgnoreCase(String email) {
         log.info("email from Create Student"); // no need to store email here because it is sensitive data
         return studentRepository.existsByEmailIgnoreCase(email);
+    }
+
+    @Override
+    public StudentDTO createStudent(StudentDTO studentDTO) {
+
+        log.info("saving student data");
+
+        Students students = mapper.map(studentDTO, Students.class);
+        Students saved = studentRepository.save(students);
+        return mapper.map(saved, StudentDTO.class);
     }
 }
