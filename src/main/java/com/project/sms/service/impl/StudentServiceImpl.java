@@ -1,5 +1,6 @@
 package com.project.sms.service.impl;
 
+import com.project.sms.dto.CourseDTO;
 import com.project.sms.dto.StudentDTO;
 import com.project.sms.model.Students;
 import com.project.sms.repository.StudentRepository;
@@ -7,6 +8,9 @@ import com.project.sms.service.StudentService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,5 +47,16 @@ public class StudentServiceImpl implements StudentService {
         Students students = mapper.map(studentDTO, Students.class);
         Students saved = studentRepository.save(students);
         return mapper.map(saved, StudentDTO.class);
+    }
+
+    @Override
+    public Page<StudentDTO> getStudents(int page, int size) {
+
+        log.info("list of students from: {}", page);
+
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+
+        return studentRepository.findByActiveTrue(pageRequest)
+                .map(student -> mapper.map(student, StudentDTO.class));
     }
 }

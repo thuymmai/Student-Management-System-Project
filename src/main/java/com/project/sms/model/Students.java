@@ -36,6 +36,7 @@ public class Students {
     @PrePersist
     public void onCreate() {
         createdAt = LocalDateTime.now();
+        active = true;
     }
 
     public Long getId() {
