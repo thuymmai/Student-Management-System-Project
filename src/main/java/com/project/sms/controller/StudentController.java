@@ -6,6 +6,7 @@ import com.project.sms.service.StudentService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,6 +42,14 @@ public class StudentController {
                               @RequestParam(value = "message", required = false) String message) {
 
         log.info("Get /list - showing List Student page");
+
+        // 2) call method ___ from CourseServiceImpl.java
+
+        // 1) before pagination, check if the list is coming/existing; if list exists, I will program for the pagination part.
+        // first check if the list is getting displayed, so call studentService
+        Page<StudentDTO> students = studentService.getStudents(page, size);
+        model.addAttribute("students", students);
+        model.addAttribute("message", message);
 
         return "students"; // students.html
     }
