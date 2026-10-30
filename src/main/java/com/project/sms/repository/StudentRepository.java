@@ -10,6 +10,9 @@ public interface StudentRepository extends JpaRepository<Students, Long> {
     // a method that checks if email address is unique
     boolean existsByEmailIgnoreCase(String email);
 
+    // method checks if the same ID belongs to its corresponding entity/record
+    boolean existsByEmailIgnoreCaseAndIdNot(String email, Long id);
+
     // create a method for pagination
     // return type is Page
     Page<Students> findByActiveTrue(Pageable pageable);

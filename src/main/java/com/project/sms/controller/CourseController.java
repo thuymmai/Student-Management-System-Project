@@ -129,7 +129,7 @@ public class CourseController {
         }
 
 
-        // check whether a code (?) already existed
+        // check whether a course code already existed
         // have the boolean method in CourseService.java
         // change existsByCourseCode to existsByCourseCodeAndIdNot
         // also, provide id from updateCourse method above

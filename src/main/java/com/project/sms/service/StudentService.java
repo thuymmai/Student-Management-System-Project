@@ -7,6 +7,8 @@ public interface StudentService {
 
     boolean existsByEmailIgnoreCase(String email);
 
+    boolean existsByEmailIgnoreCaseAndIdNot(String email, Long id);
+
     // a method returning StudentDTO
     StudentDTO createStudent(StudentDTO studentDTO);
 
@@ -15,4 +17,12 @@ public interface StudentService {
     // create getStudents() method
     // method returns Page and accesses StudentDTO, not Course entity
     Page<StudentDTO> getStudents(int page, int size);
+
+    // create a method that get/retrieve student record by ID
+    // where I return StudentDTO
+    StudentDTO getStudentById(Long id);
+
+    // create a method that updates student record
+    // include it in StudentController
+    StudentDTO updateStudent(Long id, StudentDTO studentDTO);
 }

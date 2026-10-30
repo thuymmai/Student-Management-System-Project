@@ -2,6 +2,7 @@ package com.project.sms.service.impl;
 
 import com.project.sms.dto.CourseDTO;
 import com.project.sms.dto.StudentDTO;
+import com.project.sms.model.Courses;
 import com.project.sms.model.Students;
 import com.project.sms.repository.StudentRepository;
 import com.project.sms.service.StudentService;
@@ -39,6 +40,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.existsByEmailIgnoreCase(email);
     }
 
+
     @Override
     public StudentDTO createStudent(StudentDTO studentDTO) {
 
@@ -58,5 +60,35 @@ public class StudentServiceImpl implements StudentService {
 
         return studentRepository.findByActiveTrue(pageRequest)
                 .map(student -> mapper.map(student, StudentDTO.class));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public StudentDTO getStudentById(Long id) {
+        Students student = studentRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("No student found"));
+
+        return mapper.map(student, StudentDTO.class);
+    }
+
+    @Override
+    public StudentDTO updateStudent(Long id, StudentDTO studentDTO) {
+        Students student = studentRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("No student found"));
+
+        // is user enters a valid course ID, that updated info is saved in studentDTO
+        mapper.map(studentDTO, student);
+
+        // save updated info to repository
+        Students updated = studentRepository.save(student);
+
+        // return the new/updated value that was saved
+        return mapper.map(updated, StudentDTO.class);
+    }
+
+    @Override
+    public boolean existsByEmailIgnoreCaseAndIdNot(String email, Long id) {
+        log.info("email from Update Student"); // no need to store email here because it is sensitive data
+        return studentRepository.existsByEmailIgnoreCaseAndIdNot(email, id);
     }
 }

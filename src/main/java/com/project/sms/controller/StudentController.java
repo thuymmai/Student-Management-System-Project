@@ -79,11 +79,61 @@ public class StudentController {
         studentService.createStudent(studentDTO);
 
         // redirect message
-        redirectAttributes.addAttribute("message", "Student record is updated successfully");
+        redirectAttributes.addAttribute("message", "Student record is added successfully");
 
 
         // redirect student to the student list page
         return "redirect:/students/list";
 
+    }
+
+    @GetMapping("/{id}")
+    public String getStudentById(@PathVariable Long id, Model model) {
+        StudentDTO student = studentService.getStudentById(id);
+        model.addAttribute("student", student);
+
+        return "view-student";
+    }
+
+    // create this method so Edit button can redirect to another page
+    @GetMapping("/{id}/edit")
+    public String editStudent(@PathVariable Long id, Model model) {
+        StudentDTO student = studentService.getStudentById(id);
+        model.addAttribute("studentDto", student);
+
+        return "edit-student";
+    }
+
+    @PostMapping("/{id}/update")
+    public String updateStudent(@PathVariable Long id,
+                                @Valid @ModelAttribute("studentDto") StudentDTO studentDTO,
+                                BindingResult bindingResult,
+                                Model model,
+                                RedirectAttributes redirectAttributes) {
+
+        log.info("Post /update - Update student request received");
+
+        // if validation fails
+        if (bindingResult.hasErrors()) {
+            return "edit-student";
+        }
+
+        if (studentService.existsByEmailIgnoreCaseAndIdNot(studentDTO.getEmail(), id)) {
+
+            log.error("Post /update - Email address must be unique.");
+            bindingResult.rejectValue("email", null, "Email address must be unique");
+
+            return "edit-student";
+        }
+
+        // if both things or fields are correct, save the info
+        studentService.updateStudent(id, studentDTO);
+
+        // redirect message
+        redirectAttributes.addAttribute("message", "Student record is updated successfully");
+
+
+        // redirect student to the student list page
+        return "redirect:/students/list";
     }
 }
