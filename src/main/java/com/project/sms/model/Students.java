@@ -3,6 +3,8 @@ package com.project.sms.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -32,6 +34,17 @@ public class Students {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    // taking a set or list here
+    // duplicates can exist in a list, but in a set, data is unique and is not duplicated
+    // for example, a Student cannot join the same Course twice
+    // need to specify some things, because 'enrollments' is a new column
+    // make sure to create the 'enrollments' column in a new table, not the 'students' table
+    // whatever the FK of the student is, it needs to be created in the 'enrollments' table
+    // CascadeType.ALL means if a student record is updated or deleted, the enrollment record is updated or deleted as well
+    // 'enrollments' have no ID, it exists because a Student exists, not the other way around
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Enrollment> enrollments = new HashSet<>();
 
     @PrePersist
     public void onCreate() {
