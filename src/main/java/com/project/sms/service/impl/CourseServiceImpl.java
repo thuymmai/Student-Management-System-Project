@@ -100,9 +100,4 @@ public class CourseServiceImpl implements CourseService {
         // return the new/updated value that was saved
         return mapper.map(updated, CourseDTO.class);
     }
-
-
-
-
-
 }

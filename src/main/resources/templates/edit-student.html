@@ -70,6 +70,18 @@
                                         placeholder="e.g. +1 234 567 8900">
                                 </div>
                             </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="isActive" class="form-label">Active</label>
+                                    <select id="isActive" class="form-select" 	th:field="*{active}" >
+                                        <option th:value="true">Yes</option>
+                                        <option th:value="false">No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
                             <div class="mb-3">
                                 <label for="address" class="form-label">Address</label>
                                 <textarea class="form-control" id="address" rows="3"
