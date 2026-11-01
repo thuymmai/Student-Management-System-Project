@@ -35,6 +35,7 @@ public class Students {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+
     // taking a set or list here
     // duplicates can exist in a list, but in a set, data is unique and is not duplicated
     // for example, a Student cannot join the same Course twice
@@ -114,5 +115,13 @@ public class Students {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 }
