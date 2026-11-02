@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface StudentRepository extends JpaRepository<Students, Long> {
 
     // a method that checks if email address is unique
@@ -16,5 +18,7 @@ public interface StudentRepository extends JpaRepository<Students, Long> {
     // create a method for pagination
     // return type is Page
     Page<Students> findByActiveTrue(Pageable pageable);
+
+    List<Students> findByActiveTrue();
 
 }

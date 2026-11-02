@@ -3,7 +3,10 @@ package com.project.sms.repository;
 import com.project.sms.model.Courses;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Courses, Long> {
 
@@ -17,4 +20,6 @@ public interface CourseRepository extends JpaRepository<Courses, Long> {
     // in MySQL, it will look like this: SELECT * FROM ___
     // F2 = true?? What is F2? F2 is a name of column that Hibernate makes up
     Page<Courses> findByActiveTrue(Pageable pageable);
+
+    List<Courses> findByActiveTrue(Sort sort);
 }

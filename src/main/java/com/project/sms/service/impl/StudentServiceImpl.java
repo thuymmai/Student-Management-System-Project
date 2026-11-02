@@ -15,6 +15,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional // use @Transactional to ensure multiple database operations are executed as a single unit
                // @Transactional handles commit and rollback operations
@@ -90,5 +93,13 @@ public class StudentServiceImpl implements StudentService {
     public boolean existsByEmailIgnoreCaseAndIdNot(String email, Long id) {
         log.info("email from Update Student"); // no need to store email here because it is sensitive data
         return studentRepository.existsByEmailIgnoreCaseAndIdNot(email, id);
+    }
+
+
+    @Override
+    public List<StudentDTO> getAllStudents() {
+        return studentRepository.findByActiveTrue().stream()
+                .map(student -> mapper.map(student, StudentDTO.class))
+                .collect(Collectors.toList()); // pass the Course entity, not the Course DTO
     }
 }

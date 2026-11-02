@@ -14,6 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional
 public class CourseServiceImpl implements CourseService {
@@ -99,5 +102,11 @@ public class CourseServiceImpl implements CourseService {
 
         // return the new/updated value that was saved
         return mapper.map(updated, CourseDTO.class);
+    }
+
+    @Override
+    public List<CourseDTO> getAllCourses() {
+        return courseRepository.findByActiveTrue(Sort.by("courseName")).stream()
+                .map(course -> mapper.map(course, CourseDTO.class)).collect(Collectors.toList()); // pass the Course entity, not the Course DTO
     }
 }

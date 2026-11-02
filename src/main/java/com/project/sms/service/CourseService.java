@@ -3,6 +3,8 @@ package com.project.sms.service;
 import com.project.sms.dto.CourseDTO;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface CourseService {
 
     CourseDTO createCourse(CourseDTO courseDTO);
@@ -23,6 +25,9 @@ public interface CourseService {
     // after updating a course, the new info is saved and stored in database
     // make sure the class with the existing ID is updated
     CourseDTO updateCourse(Long id, CourseDTO courseDTO);
+
+    // this method is for showing a list of courses in the Enrollment page (EnrollmentController)
+    List<CourseDTO> getAllCourses();
 
 
 
