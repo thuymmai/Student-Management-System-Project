@@ -42,28 +42,24 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr th:each="course : ${coursesList}">
+                                            <tr th:each="course : ${courseList}">
                                                 <td data-label="Select">
                                                     <div class="form-check">
 
-                                                        <!-- what does it mean? multiple courses are stored in this field *{courseIds}??
-                                                        this is where the user submits the DTO?
-                                                        map what to this field?
-                                                        capture value and send course.id to the frontend
-                                                        the value is obtained from course.id -->
+
                                                         <input class="form-check-input course-checkbox" type="checkbox"
                                                             th:field="*{courseIds}"
                                                             th:value="${course.id}"
                                                             th:id="|course-${course.id}|"
                                                             th:data-fee="${course.fee}"
-                                                            th:data-name="${course.name}">
+                                                            th:data-name="${course.courseName}">
                                                     </div>
                                                 </td>
                                                 <td data-label="Course Name"
                                                     th:for="|course-${course.id}|"
                                                     th:text="${course.courseName}"></td>
                                                 <td data-label="Fee" class="text-end"
-                                                    th:text="${'Rs.' + #numbers.formatDecimal(course.fee, 1, 'COMMA', 2, 'POINT')}"></td>
+                                                    th:text="${'$' + #numbers.formatDecimal(course.fee, 1, 'COMMA', 2, 'POINT')}"></td>
                                             </tr>
 
                                         </tbody>
