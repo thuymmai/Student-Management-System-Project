@@ -21,6 +21,8 @@
                     </div>
                 </div>
 
+                <form th:action="@{/enrollments/assign}" th:object="${enrollmentDto}" method="post">
+
                 <div class="row g-4">
                     <!-- Left: Course selection -->
                     <div class="col-lg-8">
@@ -57,8 +59,11 @@
                                                             th:data-name="${course.name}">
                                                     </div>
                                                 </td>
-                                                <td data-label="Course Name">Web Development</td>
-                                                <td data-label="Fee" class="text-end">$1,200.00</td>
+                                                <td data-label="Course Name"
+                                                    th:for="|course-${course.id}|"
+                                                    th:text="${course.courseName}"></td>
+                                                <td data-label="Fee" class="text-end"
+                                                    th:text="${'Rs.' + #numbers.formatDecimal(course.fee, 1, 'COMMA', 2, 'POINT')}"></td>
                                             </tr>
 
                                         </tbody>
@@ -76,33 +81,37 @@
                             <div class="card-body d-flex flex-column gap-3">
                                 <div>
                                     <label for="studentSelect" class="form-label">Select Student</label>
-                                    <select id="studentSelect" class="form-select mb-2">
+                                    <select id="studentSelect" class="form-select mb-2" th:field="*{studentId}">
                                         <option value="" selected>Select a student</option>
-                                        <option>Jane Doe (jane@example.com)</option>
-                                        <option>John Smith (john@example.com)</option>
-                                        <option>Alex Johnson (alex.johnson@example.com)</option>
+                                        <option th:each="student : ${studentList}"
+                                                th:value="${student.id}"
+                                                th:data-name="${student.firstName + ' ' + student.lastName}"
+                                                th:data-email="${student.email}"
+                                                th:text="${student.firstName + ' ' + student.lastName + '(' + student.email + ')'}">
+
+                                        </option>
+
                                     </select>
                                     <div class="p-3 bg-light border rounded">
                                         <div class="text-muted small">Selected Student</div>
-                                        <div class="fw-semibold mb-0">Jane Doe</div>
-                                        <div class="small text-muted">jane@example.com</div>
+                                        <div class="fw-semibold mb-0" id="selectedStudent"></div>
+                                        <div class="small text-muted" id="selectedEmail"></div>
                                     </div>
                                 </div>
                                 <div class="p-3 bg-light border rounded">
                                     <div class="d-flex justify-content-between mb-1">
                                         <span class="text-muted">Courses Selected</span>
-                                        <strong>2</strong>
+                                        <strong id="selectedCourseCount"></strong>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <span class="text-muted">Total Fee</span>
-                                        <strong class="text-primary">$2,100.00</strong>
+                                        <strong class="text-primary" id="totalfees"></strong>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="text-muted small mb-1">Selected Courses</div>
-                                    <ul class="mb-3">
-                                        <li>Web Development - $1,200.00</li>
-                                        <li>Data Structures - $900.00</li>
+                                    <ul class="mb-3" id="selectedCourses">
+                                        <li>No course selected</li>
                                     </ul>
                                     <div class="d-flex flex-wrap gap-2">
                                         <button class="btn btn-outline-secondary flex-grow-1"><i class="bi bi-arrow-left me-1"></i> Cancel</button>
@@ -113,11 +122,11 @@
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
     <div th:replace="~{fragments/layout :: scripts}"></div>
 </body>
 
