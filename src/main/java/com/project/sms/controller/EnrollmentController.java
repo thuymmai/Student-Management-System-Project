@@ -2,19 +2,19 @@ package com.project.sms.controller;
 
 import com.project.sms.dto.CourseDTO;
 import com.project.sms.dto.EnrollmentDTO;
+import com.project.sms.dto.EnrollmentSummaryDTO;
+import com.project.sms.dto.StudentDTO;
 import com.project.sms.service.CourseService;
 import com.project.sms.service.EnrollmentService;
 import com.project.sms.service.StudentService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -51,10 +51,18 @@ public class EnrollmentController {
     }
 
     @GetMapping("/enrollmentList")
-    public String enrollmentList(Model model) {
+    public String enrollmentList(@RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "3") int size,
+                              Model model,
+                              @RequestParam(value = "message", required = false) String message) {
 
-        log.info("Get /enrollments/showEnroll - showing Enrollment page.");
-        return "enrolled-students";
+        log.info("Get /enrollmentList - showing List of Enrolled Student page");
+
+        Page<EnrollmentSummaryDTO> students = enrollmentService.getEnrolledStudents(page, size);
+        model.addAttribute("students", students);
+        model.addAttribute("message", message);
+
+        return "enrolled-students"; // students.html
     }
 
     @PostMapping("/enrollCourse")
@@ -79,6 +87,6 @@ public class EnrollmentController {
 
         log.info("Post /enrollments/enrollCourse - Enrolled successfully.");
 
-        return "enroll-course";
+        return "redirect:/enrollments/enrollmentList";
     }
 }

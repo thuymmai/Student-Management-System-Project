@@ -3,6 +3,7 @@ package com.project.sms.repository;
 import com.project.sms.model.Students;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -23,11 +24,17 @@ public interface StudentRepository extends JpaRepository<Students, Long> {
     List<Students> findByActiveTrue();
 
     // this pagination query is for the list of enrolled students
-    @Query("""
+    @EntityGraph(attributePaths = {"enrollments", "enrollments.course"})
+    @Query(value = """
             select distinct s
             from Students s
             join s.enrollments e
-           """)
+           """,
+            countQuery = """
+                select count(distinct s)
+                from Students s
+                join s.enrollments e
+            """)
     Page<Students> findEnrolledStudents(Pageable pageable);
 
 }

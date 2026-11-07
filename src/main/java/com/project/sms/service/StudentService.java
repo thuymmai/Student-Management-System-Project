@@ -1,5 +1,6 @@
 package com.project.sms.service;
 
+import com.project.sms.dto.EnrollmentSummaryDTO;
 import com.project.sms.dto.StudentDTO;
 import org.springframework.data.domain.Page;
 
@@ -30,4 +31,5 @@ public interface StudentService {
 
     // a method that is for getting data of all students in a list
     List<StudentDTO> getAllStudents();
+
 }

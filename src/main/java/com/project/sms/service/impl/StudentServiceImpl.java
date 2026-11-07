@@ -102,4 +102,6 @@ public class StudentServiceImpl implements StudentService {
                 .map(student -> mapper.map(student, StudentDTO.class))
                 .collect(Collectors.toList()); // pass the Course entity, not the Course DTO
     }
+
+
 }

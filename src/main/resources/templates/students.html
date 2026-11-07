@@ -72,13 +72,10 @@
 						            <a class="page-link" th:href="@{'/students/list'(page=${pageNum}, size=${students.size})}" th:text="${pageNum + 1}"></a>
 						        </li>
 						
-
-						
 						        <!-- Next -->
 						        <li class="page-item" th:classappend="${students.last} ? 'disabled'">
 						            <a class="page-link" th:href="@{'/students/list'(page=${students.last ? students.number : students.number + 1},size=${students.size})}">Next</a>
 						        </li>
-
 						    </ul>
 						</nav>
                     </div>
