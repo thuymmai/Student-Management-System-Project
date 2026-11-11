@@ -89,4 +89,15 @@ public class EnrollmentController {
 
         return "redirect:/enrollments/enrollmentList";
     }
+
+    @GetMapping("/getStudentEnrollmentDetails/{id}")
+    public String getStudentEnrollmentDetails(@PathVariable Long id, Model model,
+                                              @RequestParam(defaultValue = "enrollments") String source) {
+
+        EnrollmentSummaryDTO enrollmentSummaryDTO = enrollmentService.findEnrolledStudentCourseDetails(id);
+
+        model.addAttribute("enrollmentSummaryDTO", enrollmentSummaryDTO);
+        model.addAttribute("source", source);
+        return "enrollment-details";
+    }
 }

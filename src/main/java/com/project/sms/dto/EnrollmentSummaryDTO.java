@@ -1,6 +1,8 @@
 package com.project.sms.dto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnrollmentSummaryDTO {
 
@@ -9,6 +11,8 @@ public class EnrollmentSummaryDTO {
     private String email;
     private int courseCount;
     private BigDecimal totalFee;
+
+    private List<CourseDTO> courseList = new ArrayList<>();
 
     public Long getStudentId() {
         return studentId;
@@ -48,5 +52,13 @@ public class EnrollmentSummaryDTO {
 
     public void setTotalFee(BigDecimal totalFee) {
         this.totalFee = totalFee;
+    }
+
+    public List<CourseDTO> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<CourseDTO> courseList) {
+        this.courseList = courseList;
     }
 }

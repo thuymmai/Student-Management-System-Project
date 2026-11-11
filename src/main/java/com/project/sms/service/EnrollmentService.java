@@ -4,9 +4,16 @@ import com.project.sms.dto.EnrollmentDTO;
 import com.project.sms.dto.EnrollmentSummaryDTO;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface EnrollmentService {
 
     void enrollStudentToCourses(EnrollmentDTO enrollmentDTO);
 
     Page<EnrollmentSummaryDTO> getEnrolledStudents(int page, int size);
+
+    // will only get one detail each fetch, not getting multiple details at once
+    EnrollmentSummaryDTO findEnrolledStudentCourseDetails(Long studentId);
+
+    List<EnrollmentSummaryDTO> getRecentlyEnrolledStudents();
 }
