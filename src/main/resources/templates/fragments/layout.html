@@ -30,9 +30,18 @@
             <a th:href="@{/enrollments/showEnroll}" class="sidebar-link">
                 <i class="bi bi-check2-square"></i> Enroll to Course
             </a>
-            <a href="login.html" class="sidebar-link mt-auto border-top border-secondary">
-                <i class="bi bi-box-arrow-right"></i> Logout
-            </a>
+<!--            <a href="login.html" class="sidebar-link mt-auto border-top border-secondary">-->
+<!--                <i class="bi bi-box-arrow-right"></i> Logout-->
+<!--            </a>-->
+            <form method="post" th:action="@{/logout}" class="sidebar-link mt-auto border-top border-secondary">
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-link text-decoration-none d-flex align-items-center w-100 p-0">
+                    <i class="bi bi-box-arrow-right me-2"></i>
+                    Logout
+                </button>
+            </form>
         </div>
     </div>
 
