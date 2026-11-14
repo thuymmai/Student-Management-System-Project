@@ -1,7 +1,7 @@
 # Use a base image with eclipse-temurin Java 21 installed
 FROM eclipse-temurin
 
-LABEL maintainer="thuymmai11@gmail.com"
+LABEL maintainer="thuymmai"
 
 # Set the working directory in the container
 WORKDIR /myapp
