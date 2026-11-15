@@ -90,7 +90,7 @@ public class Students {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = this.phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {
