@@ -14,7 +14,7 @@
             <div class="container-fluid px-4 py-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Add New Course</h2>
-                    <a th:href="@{/course/list/}" class="btn btn-secondary"><i class="bi bi-arrow-left me-1"></i> Back to
+                    <a th:href="@{/course/list}" class="btn btn-secondary"><i class="bi bi-arrow-left me-1"></i> Back to
                         List</a>
                 </div>
 
@@ -90,6 +90,15 @@
                                          th:if="${#fields.hasErrors('fee')}"
                                          th:errors="*{fee}">
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="isActive" class="form-label">Active</label>
+                                    <select id="isActive" class="form-select" 	th:field="*{active}" >
+                                        <option th:value="true">Yes</option>
+                                        <option th:value="false">No</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="mb-3">

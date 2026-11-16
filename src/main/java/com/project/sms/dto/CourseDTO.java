@@ -27,7 +27,7 @@ public class CourseDTO {
     @Size(max = 500, message = "Max of 500 characters allowed.")
     private String description;
 
-    private boolean active;
+    private boolean active = true;
 
     public Long getId() {
         return id;

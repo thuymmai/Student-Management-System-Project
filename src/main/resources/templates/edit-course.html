@@ -36,7 +36,7 @@
 
                                          <div class="invalid-feedback"
 		                                    th:if="${#fields.hasErrors('courseName')}"
-		                                    th:errors="courseName">
+		                                    th:errors="*{courseName}">
 		                                </div>
                                 </div>
                                <div class="col-md-6">
