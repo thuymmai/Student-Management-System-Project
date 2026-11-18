@@ -34,7 +34,7 @@
                             <div class="card-body">
 
                                 <!-- Validating input for Course ID -->
-                                <div class="invalid-feedback"
+                                <div class="alert alert-danger"
                                      th:if="${#fields.hasErrors('courseIds')}"
                                      th:errors="*{courseIds}">
                                 </div>

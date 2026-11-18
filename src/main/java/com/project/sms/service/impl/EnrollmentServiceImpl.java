@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,6 +74,23 @@ public class EnrollmentServiceImpl implements EnrollmentService {
             enrollmentRepository.save(enrollment);
         }
 
+    }
+
+    @Override
+    public List<String> getAlreadyEnrolledCourseNames(EnrollmentDTO enrollmentDTO) {
+        log.info("Checking for courses the student is already enrolled in");
+
+        List<String> courseNames = new ArrayList<>();
+
+        for (Long courseId : enrollmentDTO.getCourseIds()) {
+            // same check that enrollStudentToCourses() uses to skip duplicates
+            if (enrollmentRepository.existsByStudentIdAndCourseId(enrollmentDTO.getStudentId(), courseId)) {
+                courseRepository.findById(courseId)
+                        .ifPresent(course -> courseNames.add(course.getCourseName()));
+            }
+        }
+
+        return courseNames;
     }
 
     @Override

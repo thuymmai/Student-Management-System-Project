@@ -17,13 +17,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/enrollments")
 public class EnrollmentController {
 
     private static final Logger log = LoggerFactory.getLogger(EnrollmentController.class);
 
-    // get these instance variables or objects (?) from CourseController and StudentController
+    // get these instance variables or objects from CourseController and StudentController
     // dependency injection
     private final CourseService courseService;
     private final StudentService studentService;
@@ -38,7 +40,7 @@ public class EnrollmentController {
         this.enrollmentService = enrollmentService;
     }
 
-    // method that opens the "page"? like Enrollment page?
+    // method that opens the Enrollment page
     @GetMapping("/showEnroll")
     public String showEnroll(Model model) {
 
@@ -75,6 +77,21 @@ public class EnrollmentController {
 
         // before the user submits the request, check if his submission is valid
         if(bindingResult.hasErrors()) {
+
+            model.addAttribute("courseList", courseService.getAllCourses());
+            model.addAttribute("studentList", studentService.getAllStudents());
+
+            return "enroll-course";
+        }
+
+        // check whether the student is already enrolled in any of the selected courses
+        // getAlreadyEnrolledCourseNames() is in EnrollmentService.java
+        List<String> alreadyEnrolled = enrollmentService.getAlreadyEnrolledCourseNames(enrollmentDTO);
+
+        if (!alreadyEnrolled.isEmpty()) {
+            log.error("Post /enrollments/enrollCourse - student is already enrolled in {}", alreadyEnrolled);
+            bindingResult.rejectValue("courseIds", "duplicate",
+                    "This student is already enrolled in " + String.join(", ", alreadyEnrolled));
 
             model.addAttribute("courseList", courseService.getAllCourses());
             model.addAttribute("studentList", studentService.getAllStudents());
